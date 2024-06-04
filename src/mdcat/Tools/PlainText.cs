@@ -5,7 +5,7 @@ namespace MarkdownTerminal.Tools;
 public enum UniColor
 {
     // This Color codes for unicode like: \u001b[3{ color code }m
-    Black = 0, 
+    Black = 0,
     Red = 1,
     Green = 2,
     Yellow = 3,
@@ -42,9 +42,14 @@ public static class PlainText
         return $"\u001b[4{(int)UniColor.Black}m";
     } // Generate unicode by color code for background color
 
-    public static string Colorize(this string plainText, int colorCode, bool background = false)
+    public static string Colorize(this string plainText, UniColor colorCode, bool background = false)
     {
         Func<int, string> colorUni = (int code) => (background) ? _backColor(code) : _foreColor(code);
-        return $"{colorUni(colorCode)}{plainText}{colorUni(7)}";
+        return $"{colorUni((int)colorCode)}{plainText}{colorUni(7)}";
+    }
+
+    public static string Decorate(this string plainText, UniTextDecoration decorCode)
+    {
+        return $"{_decorate(decorCode)}{plainText}{_decorate(UniTextDecoration.Blink)}";
     }
 }
