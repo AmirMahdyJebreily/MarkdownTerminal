@@ -2,6 +2,11 @@
 
 namespace MarkdownTerminal.Tools;
 
+public enum UniColorGround
+{
+    Foreground = 30,
+    Background = 40
+}
 public enum UniColor
 {
     // This Color codes for unicode like: \u001b[3{ color code }m
@@ -24,32 +29,25 @@ public enum UniTextDecoration
 
 public static class PlainText
 {
+    const string reset = "\u001b[0m";
     private static string _decorate(UniTextDecoration code)
     {
         return $"\u001b[{(int)code}m";
     }
-    private static string _foreColor(int code)
+    private static string _color(int code, int groundCode = 30)
     {
         if (code >= 0 && code <= 7)
             return $"\u001b[3{code}m";
-        return $"\u001b[3{(int)UniColor.White}m";
+        return $"\u001b[{groundCode + (int)UniColor.White}m";
     } // Generate unicode by color code for foreground color
 
-    private static string _backColor(int code)
+    public static string Colorize(this string plainText, UniColor colorCode, UniColorGround ground = UniColorGround.Foreground, bool background = false)
     {
-        if (code >= 0 && code <= 7)
-            return $"\u001b[4{code}m";
-        return $"\u001b[4{(int)UniColor.Black}m";
-    } // Generate unicode by color code for background color
-
-    public static string Colorize(this string plainText, UniColor colorCode, bool background = false)
-    {
-        Func<int, string> colorUni = (int code) => (background) ? _backColor(code) : _foreColor(code);
-        return $"{colorUni((int)colorCode)}{plainText}{colorUni(7)}";
+        return $"{_color((int)colorCode, (int)ground)}{plainText}{reset}";
     }
 
     public static string Decorate(this string plainText, UniTextDecoration decorCode)
     {
-        return $"{_decorate(decorCode)}{plainText}{_decorate(UniTextDecoration.Blink)}";
+        return $"{_decorate(decorCode)}{plainText}{reset}";
     }
 }
