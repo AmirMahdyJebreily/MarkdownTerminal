@@ -4,20 +4,20 @@ namespace MarkdownTerminal.Tools;
 
 public enum UniColorGround
 {
-    Foreground = 30,
-    Background = 40
+    Foreground = 38,
+    Background = 48
 }
 public enum UniColor
 {
     // This Color codes for unicode like: \u001b[3{ color code }m
-    Black = 0,
-    Red = 1,
-    Green = 2,
-    Yellow = 3,
+    Black = 232,
+    Gray = 238,
+    Red = 197,
+    Green = 47,
+    Yellow = 226,
     Blue = 4,
-    Magenta = 5,
-    Cyan = 6,
-    White = 7
+    Cyan = 51,
+    White = 231
 }
 
 public enum UniTextDecoration
@@ -36,10 +36,8 @@ public static class PlainText
     }
     private static string _color(int code, int groundCode = 30)
     {
-        if (code >= 0 && code <= 7)
-            return $"\u001b[3{code}m";
-        return $"\u001b[{groundCode + (int)UniColor.White}m";
-    } // Generate unicode by color code for foreground color
+        return $"\u001b[{groundCode};5;{code}m";
+    } // Generate unicode by color code
 
     public static string Colorize(this string plainText, UniColor colorCode, UniColorGround ground = UniColorGround.Foreground, bool background = false)
     {

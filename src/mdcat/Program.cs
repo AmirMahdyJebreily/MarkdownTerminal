@@ -9,7 +9,7 @@ public class mdcat
     {
         try
         {
-
+            Console.WriteLine(MDComponents.Heading("Kos Madar Besat", 1));
             if (args.Length == 0)
             {
                 throw new MdcatIOException();
