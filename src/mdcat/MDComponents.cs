@@ -16,4 +16,8 @@ public static class MDComponents
 
         return $"{res}\n {("".PadRight(plainText.Length + grade + 5, '─')).Colorize(246)}";
     }
+    public static string Paragraph(this string plainText)
+    {
+        return " - ".Decorate(UniTextDecoration.Dim) + plainText;
+    }
 }
