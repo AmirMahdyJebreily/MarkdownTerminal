@@ -23,6 +23,8 @@ public enum UniColor
 public enum UniTextDecoration
 {
     Bold = 1,
+    Dim = 2,
+    Italic = 3,
     Underline = 4,
     Blink = 5
 }
@@ -39,9 +41,9 @@ public static class PlainText
         return $"\u001b[{groundCode};5;{code}m";
     } // Generate unicode by color code
 
-    public static string Colorize(this string plainText, UniColor colorCode, UniColorGround ground = UniColorGround.Foreground, bool background = false)
+    public static string Colorize(this string plainText, int colorCode, UniColorGround ground = UniColorGround.Foreground, bool background = false)
     {
-        return $"{_color((int)colorCode, (int)ground)}{plainText}{reset}";
+        return $"{_color(colorCode, (int)ground)}{plainText}{reset}";
     }
 
     public static string Decorate(this string plainText, UniTextDecoration decorCode)
