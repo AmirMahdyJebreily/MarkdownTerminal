@@ -13,14 +13,16 @@ public static class MDComponents
                 .Decorate(UniTextDecoration.Dim)} { // Colosize and decorate #'s before the heading text
                  plainText
                 .Colorize(257 - (grade * 2))
-                .Decorate(UniTextDecoration.Bold)}"; // Colorize the heading text
+                .Decorate(UniTextDecoration.Bold)
+                .Decorate(UniTextDecoration.Underline)}"; // Colorize the heading text
         }
         return $"\n   {("").PadRight(grade, '#')
                 .Colorize(249)
                 .Decorate(UniTextDecoration.Dim)} { // Colosize and decorate #'s before the heading text
                  plainText
                 .Colorize(231)
-                .Decorate(UniTextDecoration.Bold)}\n"; // Colorize the heading text
+                .Decorate(UniTextDecoration.Bold)
+                .Decorate(UniTextDecoration.Underline)}\n"; // Colorize the heading text
 
     }
     public static string Paragraph(this string plainText)
@@ -35,5 +37,13 @@ public static class MDComponents
     public static string MDItalic(this string plainText)
     {
         return plainText.Colorize(231).Decorate(UniTextDecoration.Italic); // white
+    }
+    public static string MDUnderline(this string plainText)
+    {
+        return plainText.Colorize(231).Decorate(UniTextDecoration.Underline); // white
+    }
+    public static string MDStrikethrough(this string plainText)
+    {
+        return plainText.Colorize(231).Decorate(UniTextDecoration.Strikethrough); // white
     }
 }

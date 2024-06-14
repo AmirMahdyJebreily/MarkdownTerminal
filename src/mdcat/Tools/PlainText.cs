@@ -25,6 +25,7 @@ public enum UniTextDecoration
     Bold = 1,
     Dim = 2,
     Italic = 3,
+    Strikethrough = 3,
     Underline = 4,
     Blink = 5
 }
