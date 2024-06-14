@@ -14,10 +14,14 @@ public static class MDComponents
             .Colorize((grade == 1) ? 231 : 257 - (grade * 2))
             .Decorate(UniTextDecoration.Bold)}"; // Colorize the heading text
 
-        return $"{res}\n {("".PadRight(plainText.Length + grade + 5, '─')).Colorize(246)}";
+        return $"\n{res}\n";
     }
     public static string Paragraph(this string plainText)
     {
         return " - ".Decorate(UniTextDecoration.Dim) + plainText;
+    }
+    public static string MDBold(this string plainText)
+    {
+        return plainText.Colorize(231).Decorate(UniTextDecoration.Bold); // white
     }
 }
