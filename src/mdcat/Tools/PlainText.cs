@@ -25,7 +25,7 @@ public enum UniTextDecoration
     Bold = 1,
     Dim = 2,
     Italic = 3,
-    Strikethrough = 3,
+    Strikethrough = 9,
     Underline = 4,
     Blink = 5
 }
@@ -42,7 +42,7 @@ public static class PlainText
         return $"\u001b[{groundCode}8;5;{code}m";
     } // Generate unicode by color code
 
-    public static string Colorize(this string plainText, int colorCode, UniColorGround ground = UniColorGround.Foreground, bool background = false)
+    public static string Colorize(this string plainText, int colorCode, UniColorGround ground = UniColorGround.Foreground)
     {
         return $"{_color(colorCode, (int)ground)}{plainText}{reset}";
     }

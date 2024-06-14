@@ -46,4 +46,11 @@ public static class MDComponents
     {
         return plainText.Colorize(231).Decorate(UniTextDecoration.Strikethrough); // white
     }
+
+    public static string MDQoute(this string plainText)
+    {
+        return $"█   {plainText}".Colorize(237,UniColorGround.Background);
+
+    }
+
 }
