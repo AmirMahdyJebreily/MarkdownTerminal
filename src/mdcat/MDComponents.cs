@@ -31,4 +31,9 @@ public static class MDComponents
     {
         return plainText.Colorize(231).Decorate(UniTextDecoration.Bold); // white
     }
+
+    public static string MDItalic(this string plainText)
+    {
+        return plainText.Colorize(231).Decorate(UniTextDecoration.Italic); // white
+    }
 }
