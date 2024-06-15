@@ -32,7 +32,7 @@ public enum UniTextDecoration
 
 public static class PlainText
 {
-    const string reset = "\u001b[0m";
+    const string _reset = "\u001b[0m";
     private static string _decorate(UniTextDecoration code)
     {
         return $"\u001b[{(int)code}m";
@@ -42,13 +42,18 @@ public static class PlainText
         return $"\u001b[{groundCode}8;5;{code}m";
     } // Generate unicode by color code
 
-    public static string Colorize(this string plainText, int colorCode, UniColorGround ground = UniColorGround.Foreground)
+    public static string Colorize(this string plainText, int colorCode, UniColorGround ground = UniColorGround.Foreground, string reset = "")
     {
-        return $"{_color(colorCode, (int)ground)}{plainText}{reset}";
+        return $"{_color(colorCode, (int)ground)}{plainText}{_reset + reset}";
     }
 
-    public static string Decorate(this string plainText, UniTextDecoration decorCode)
+    public static string Decorate(this string plainText, UniTextDecoration decorCode, string reset = "")
     {
-        return $"{_decorate(decorCode)}{plainText}{reset}";
+        return $"{_decorate(decorCode)}{plainText}{_reset + reset}";
+    }
+
+    public static string reseter(this string plainText, string reset = _reset)
+    {
+        return plainText.Replace(_reset, _reset + reset);
     }
 }

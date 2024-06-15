@@ -49,7 +49,9 @@ public static class MDComponents
 
     public static string MDQoute(this string plainText)
     {
-        return $"█   {plainText}".Colorize(237,UniColorGround.Background);
+        const int colorCode = 236;
+        string reset = $"\u001b[48;5;{colorCode}m";
+        return $"█    {">".Colorize(240)} {plainText} ".reseter(reset).Colorize(colorCode, UniColorGround.Background);
 
     }
 
