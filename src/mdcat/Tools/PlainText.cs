@@ -42,14 +42,14 @@ public static class PlainText
         return $"\u001b[{groundCode}8;5;{code}m";
     } // Generate unicode by color code
 
-    public static string Colorize(this string plainText, int colorCode, UniColorGround ground = UniColorGround.Foreground, string reset = "")
+    public static string Colorize(this string plainText, int colorCode, UniColorGround ground = UniColorGround.Foreground, string reset = _reset)
     {
-        return $"{_color(colorCode, (int)ground)}{plainText}{_reset + reset}";
+        return $"{_color(colorCode, (int)ground)}{plainText}{reset}";
     }
 
-    public static string Decorate(this string plainText, UniTextDecoration decorCode, string reset = "")
+    public static string Decorate(this string plainText, UniTextDecoration decorCode, string reset = _reset)
     {
-        return $"{_decorate(decorCode)}{plainText}{_reset + reset}";
+        return $"{_decorate(decorCode)}{plainText}{reset}";
     }
 
     public static string reseter(this string plainText, string reset = _reset)
