@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-
-namespace MarkdownTerminal.Tools;
-
+﻿namespace MarkdownTerminal.Tools;
+#region Enums
 public enum UniColorGround
 {
     Foreground = 3,
@@ -17,7 +15,7 @@ public enum UniColor
     Yellow = 226,
     Blue = 4,
     Cyan = 51,
-    White = 231
+    White = 231,
 }
 
 public enum UniTextDecoration
@@ -29,10 +27,17 @@ public enum UniTextDecoration
     Underline = 4,
     Blink = 5
 }
+#endregion
 
 public static class PlainText
 {
+    #region Constants
     const string _reset = "\u001b[0m";
+    const string _resetForeColor = "\u001b[39m";
+    const string _resetBackColor = "\u001b[49m";
+    #endregion
+
+    #region Private core functions
     private static string _decorate(UniTextDecoration code)
     {
         return $"\u001b[{(int)code}m";
@@ -41,19 +46,28 @@ public static class PlainText
     {
         return $"\u001b[{groundCode}8;5;{code}m";
     } // Generate unicode by color code
+    #endregion
 
-    public static string Colorize(this string plainText, int colorCode, UniColorGround ground = UniColorGround.Foreground, string reset = _reset)
+    #region Public functions
+    public static string DecorateReset(UniTextDecoration code)
     {
-        return $"{_color(colorCode, (int)ground)}{plainText}{reset}";
+        int intcode = (int)code;
+        if (intcode == 1)
+            intcode = 2;
+        return $"\u001b[2{intcode}m";
+    }
+    public static string ColorReset(UniColorGround ground = UniColorGround.Foreground)
+    {
+        return ((ground == UniColorGround.Foreground) ? _resetForeColor : _resetBackColor);
+    }
+    public static string Colorize(this string plainText, int colorCode, UniColorGround ground = UniColorGround.Foreground)
+    {
+        return $"{_color(colorCode, (int)ground)}{plainText}{ColorReset(ground)}";
     }
 
-    public static string Decorate(this string plainText, UniTextDecoration decorCode, string reset = _reset)
+    public static string Decorate(this string plainText, UniTextDecoration decorCode)
     {
-        return $"{_decorate(decorCode)}{plainText}{reset}";
+        return $"{_decorate(decorCode)}{plainText}{DecorateReset(decorCode)}";
     }
-
-    public static string reseter(this string plainText, string reset = _reset)
-    {
-        return plainText.Replace(_reset, _reset + reset);
-    }
+    #endregion
 }

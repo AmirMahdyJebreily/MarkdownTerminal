@@ -10,14 +10,11 @@ public static class MDComponents
                         .Colorize(249)
                         .Decorate(UniTextDecoration.Dim)} ";
         string res = plainText.Decorate(UniTextDecoration.Bold);
-        string reset = "".Decorate(UniTextDecoration.Bold, "");
         if ((grade != 1))
         {
-            reset = reset.Colorize(257 - (grade * 2), UniColorGround.Foreground, "");
-            return preRes + res.reseter(reset).Colorize(257 - (grade * 2)); // Colorize the heading #{any but 1} text
+            return preRes + res.Colorize(257 - (grade * 2)); // Colorize the heading #{any but 1} text
         }
-        reset = reset.Decorate(UniTextDecoration.Underline, "").Colorize(231, UniColorGround.Foreground, "");
-        return preRes + res.reseter(reset).Decorate(UniTextDecoration.Underline).Colorize(231); // Colorize the heading #1 text
+        return preRes + res.Decorate(UniTextDecoration.Underline).Colorize(231); // Colorize the heading #1 text
     }
     public static string Paragraph(this string plainText)
     {
@@ -46,8 +43,7 @@ public static class MDComponents
     public static string MDQoute(this string plainText)
     {
         const int colorCode = 237;
-        string reset = "".Colorize(colorCode, UniColorGround.Background, "");
-        return $"█    {">".Colorize(240)} {plainText} ".reseter(reset).Colorize(colorCode, UniColorGround.Background);
+        return $"█    {">".Colorize(240)} {plainText} ".Colorize(colorCode, UniColorGround.Background);
 
     }
 
