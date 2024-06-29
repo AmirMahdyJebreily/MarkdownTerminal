@@ -1,23 +1,33 @@
 ﻿using MarkdownTerminal.Tools;
+using System.Text.RegularExpressions;
 
 namespace MarkdownTerminal;
 
 public static class MDComponents
 {
-    private static Func<string, string> _mdSynTheme = plainText => plainText.Colorize(249).Decorate(UniTextDecoration.Dim);
-    public static string Heading(this string plainText, int grade, bool mdSyntax = true)
+    public static string StyleLine(this string content, Func<string, string>? commponent, int check = 0)
     {
-        string mdSyn = (mdSyntax) ? $"   {_mdSynTheme(("").PadRight(grade, '#'))} " : "   ";
-        string res = plainText.Decorate(UniTextDecoration.Bold);
-        if ((grade != 1))
-        {
-            return mdSyn + res.Colorize(257 - (grade * 2)); // Colorize the heading #{any but 1} text
-        }
-        return mdSyn + res.Decorate(UniTextDecoration.Underline).Colorize(231); // Colorize the heading #1 text
+
+        if (Regex.IsMatch(content, "(#) .*") && commponent != Heading)
+            return StyleLine(content, Heading);
+
+
+        return commponent(content) ?? content;
+    }
+
+
+
+    private static Func<string, string> _mdSynTheme = plainText => plainText.Colorize(249).Decorate(UniTextDecoration.Dim);
+
+    public static string Heading(this string content)
+    {
+        string sharps = _mdSynTheme(Regex.Match(content, "#*").Value);
+        return $"\n {sharps + content.Replace("#", "").Colorize(231).Decorate(UniTextDecoration.Bold)}";
+
     }
     public static string Paragraph(this string plainText, bool mdSyntax = true)
     {
-        return ((mdSyntax) ? " - ".Colorize(237) : "") + plainText + "\n";
+        return ((mdSyntax) ? "   - ".Colorize(237) : "") + plainText + "\n";
     }
     public static string MDBold(this string plainText, bool mdSyntax = true)
     {
@@ -59,7 +69,12 @@ public static class MDComponents
     {
         string mdSyn = (mdSyntax) ? _mdSynTheme("```") : "";
         string mdSynSec = (mdSyntax) ? _mdSynTheme(lang) : "";
-        return $"\n   {mdSyn}{mdSynSec}\n\t{plainText}\n   {mdSyn}\n";
+        return $"\n   {mdSyn}{mdSynSec}\n\t{plainText.Colorize(249)}\n   {mdSyn}\n";
     }
+
+    //public static string MDLink(this string plainText)
+    //{
+
+    //}
 
 }
